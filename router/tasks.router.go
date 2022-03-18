@@ -13,6 +13,7 @@ func TasksRouter() *mux.Router {
 
 	router.HandleFunc("/api/tasks", taskController.CreateTask).Methods("POST")
 	router.HandleFunc("/api/tasks", taskController.GetTasks).Methods("GET")
+	router.HandleFunc("/api/getData", taskController.ExternalApi).Methods("GET")
 	router.HandleFunc("/api/tasks/{id}", taskController.GetSingleTask).Methods("GET")
 	router.HandleFunc("/api/tasks/{id}", taskController.UpdateTask).Methods("PUT")
 	router.HandleFunc("/api/tasks/{id}", taskController.Delete).Methods("DELETE")

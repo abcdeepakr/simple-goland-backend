@@ -3,6 +3,9 @@ package taskController
 import (
 	model "deepakr-28/simple-golang-backend/models"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -122,19 +125,35 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(task)
 }
 
-// package userController
+type Post struct {
+	UserID int32  `json:"userId"`
+	ID     int    `json:"id"`
+	Title  string `json:"title"`
+	Body   string `json:"body"`
+}
 
-// import (
-// 	model "deepakr-28/simple-golang-backend/models/"
-// 	"encoding/json"
-// 	"net/http"
-// )
+func ExternalApi(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
-// var users []model.User
+	resp, err := http.Get("https://jsonplaceholder.typicode.com/posts")
 
-// func Users(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "application/json")
+	if err != nil {
+		log.Fatal(err)
 
-// 	json.NewEncoder(w).Encode(users) // this will be returned in the api response body
+	}
 
-// }
+	defer resp.Body.Close()
+	var posts []Post
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		panic(err.Error())
+	}
+	json.Unmarshal(body, &posts)
+	for _, post := range posts {
+		// fmt.Printf("\n%+v\n", posts[i])
+		fmt.Println("TITLE : ", post.Title)
+	}
+	json.NewEncoder(w).Encode(posts)
+}
