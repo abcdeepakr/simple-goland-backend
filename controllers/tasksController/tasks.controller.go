@@ -121,3 +121,20 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	task := deleteTask(taskId)
 	json.NewEncoder(w).Encode(task)
 }
+
+// package userController
+
+// import (
+// 	model "deepakr-28/simple-golang-backend/models/"
+// 	"encoding/json"
+// 	"net/http"
+// )
+
+// var users []model.User
+
+// func Users(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Content-Type", "application/json")
+
+// 	json.NewEncoder(w).Encode(users) // this will be returned in the api response body
+
+// }
