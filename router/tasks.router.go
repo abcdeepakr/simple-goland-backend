@@ -10,7 +10,7 @@ import (
 func TasksRouter() *mux.Router {
 
 	router := mux.NewRouter()
-
+	router.HandleFunc("/", taskController.Root).Methods("GET")
 	router.HandleFunc("/api/tasks", taskController.CreateTask).Methods("POST")
 	router.HandleFunc("/api/tasks", taskController.GetTasks).Methods("GET")
 	router.HandleFunc("/api/getData", taskController.ExternalApi).Methods("GET")

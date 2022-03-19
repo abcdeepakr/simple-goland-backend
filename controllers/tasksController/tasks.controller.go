@@ -157,3 +157,28 @@ func ExternalApi(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode(posts)
 }
+func Root(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	resp, err := http.Get("https://jsonplaceholder.typicode.com/posts")
+
+	if err != nil {
+		log.Fatal(err)
+
+	}
+
+	defer resp.Body.Close()
+	var posts []Post
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		panic(err.Error())
+	}
+	json.Unmarshal(body, &posts)
+	for _, post := range posts {
+		// fmt.Printf("\n%+v\n", posts[i])
+		fmt.Println("TITLE : ", post.Title)
+	}
+	json.NewEncoder(w).Encode(posts)
+}
