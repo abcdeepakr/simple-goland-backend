@@ -5,10 +5,16 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "4000" // set default port if not specified
+	}
+
 	newRouter := router.TasksRouter()
-	log.Fatal(http.ListenAndServe(":8080", newRouter))
+	log.Fatal(http.ListenAndServe(":"+port, newRouter))
 	fmt.Println("LISTING ON PORT 4000")
 }
