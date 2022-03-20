@@ -9,6 +9,6 @@ import (
 
 func main() {
 	newRouter := router.TasksRouter()
-	log.Fatal(http.ListenAndServe(":4000", newRouter))
+	log.Fatal(http.ListenAndServe(":8080", newRouter))
 	fmt.Println("LISTING ON PORT 4000")
 }
